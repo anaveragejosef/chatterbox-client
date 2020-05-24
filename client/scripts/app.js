@@ -1,7 +1,6 @@
 var App = {
 
   $spinner: $('.spinner img'),
-
   username: 'anonymous',
 
   initialize: function() {
@@ -10,19 +9,18 @@ var App = {
     FormView.initialize();
     RoomsView.initialize();
     MessagesView.initialize();
-
     // Fetch initial batch of messages
     App.startSpinner();
     App.fetch(App.stopSpinner);
 
   },
 
-  fetch: function(callback = ()=>{}) {
+  fetch: function(callback = () => {}) {
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
-
       callback();
+      Rooms.sortRoomData(data, false);
     });
   },
 

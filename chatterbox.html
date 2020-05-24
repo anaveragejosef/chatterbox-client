@@ -1,53 +1,91 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>chatterbox</title>
-    <link rel="stylesheet" href="client/styles/styles.css">
-    <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/underscore/underscore.js"></script>
-    <script>
-      // DO NOT MODIFY THIS CODE
-      if (!/(&|\?)username=/.test(window.location.search)) {
-        var search = window.location.search;
-        if (!/\?/.test(search)) {
-          search += '?';
-        }
-        if (search[search.length - 1] !== '?') {
-          search += '&';
-        }
-        search += 'username=' + (prompt('What is your name?') || 'anonymous');
-        window.location.search = search;
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <title>chatterbox</title>
+  <link rel="stylesheet" href="client/styles/styles.css">
+  <script src="node_modules/jquery/dist/jquery.js"></script>
+  <script src="node_modules/underscore/underscore.js"></script>
+  <!-- <script src="node_modules/popper.js/dist/umd/popper.min.js"></script> -->
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script>
+    // DO NOT MODIFY THIS CODE
+    if (!/(&|\?)username=/.test(window.location.search)) {
+      var search = window.location.search;
+      if (!/\?/.test(search)) {
+        search += '?';
       }
-    </script>
-  </head>
-  <body>
-    <div id="main">
-      <h1>chatterbox</h1>
-      <div class="spinner"><img src="client/images/spiffygif_46x46.gif"></div>
-      <div id="rooms">
-        Room:
-        <select></select>
-        <button>Add Room</button>
-      </div>
-      <form action="#" id="send" method="post">
-        <input type="text" name="message" id="message"/>
-        <input type="submit" name="submit" class="submit"/>
-      </form>
+      if (search[search.length - 1] !== '?') {
+        search += '&';
+      }
+      search += 'username=' + (prompt('What is your name?') || 'anonymous');
+      window.location.search = search;
+    }
+  </script>
+</head>
+
+<body>
+  <div id="main">
+    <h1>chatterbox</h1>
+    <div class="spinner"><img src="client/images/spiffygif_46x46.gif"></div>
+    <div id="rooms">
+      Room:
+      <select id="room-select" class="form-control">
+        <option>--Select--</option>
+      </select>
+      <button type="button" class="btn btn-primary" onclick="Rooms.add()"  data-toggle="modal" data-target="#createRoomModal">Add Room</button>
     </div>
-    <div id="chats"></div>
-    <script src="client/env/config.js"></script>
-    <script src="client/scripts/parse.js"></script>
-    <script src="client/scripts/rooms.js"></script>
-    <script src="client/scripts/friends.js"></script>
-    <script src="client/scripts/messages.js"></script>
-    <script src="client/scripts/formView.js"></script>
-    <script src="client/scripts/roomsView.js"></script>
-    <script src="client/scripts/messageView.js"></script>
-    <script src="client/scripts/messagesView.js"></script>
-    <script src="client/scripts/app.js"></script>
-    <script>
-      $(() => App.initialize());
-    </script>
-  </body>
+    <form action="#" id="send" method="post">
+      <div class="form-group row">
+        <input type="text" name="message" class="form-control" id="message" />
+        <button type="submit" name="submit" class="btn btn-success submit">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div id="chats"></div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="createRoomModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="createRoomLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createRoomLabel">Create Room</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <input type="text" id="new-room-name" class="form-control" placeholder="Room Name" id="room-name">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" onclick="Rooms.createRoom()">Create</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="client/env/config.js"></script>
+  <script src="client/scripts/parse.js"></script>
+  <script src="client/scripts/rooms.js"></script>
+  <script src="client/scripts/friends.js"></script>
+  <script src="client/scripts/messages.js"></script>
+  <script src="client/scripts/formView.js"></script>
+  <script src="client/scripts/roomsView.js"></script>
+  <script src="client/scripts/messageView.js"></script>
+  <script src="client/scripts/messagesView.js"></script>
+  <script src="client/scripts/app.js"></script>
+  <script>
+    $(() => App.initialize());
+  </script>
+</body>
+
 </html>

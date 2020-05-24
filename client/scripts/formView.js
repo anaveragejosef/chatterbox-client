@@ -8,9 +8,30 @@ var FormView = {
 
   handleSubmit: function(event) {
     // Stop the browser from submitting the form
+
+    let roomname = Rooms.active();
+    if (!Rooms.active()) {
+      return;
+    }
     event.preventDefault();
-    
-    console.log('click!');
+
+    let input = $(event.target).find('#message')[0];
+    let text = input.value;
+    let username = App.username;
+
+    if (text) {
+      Parse.create( {username, roomname, text},
+        function(data) {
+          console.log(data);
+          input.value = '';
+          Parse.readAll(
+            (data) => Rooms.sortRoomData(data, true),
+            (err) => console.log(err));
+        },
+        function(error) {
+          console.log(error);
+        });
+    }
   },
 
   setStatus: function(active) {
